@@ -1,0 +1,79 @@
+from flask import Flask
+from flask import render_template, redirect, request, flash
+from flask_wtf import FlaskForm
+from wtforms import StringField
+from wtforms import IntegerField
+from wtforms.validators import DataRequired
+from flask_sqlalchemy import SQLAlchemy
+import pymysql
+import secrets
+#import os
+
+#dbuser = os.environ.get('DBUSER')
+#dbpass = os.environ.get('DBPASS')
+#dbhost = os.environ.get('DBHOST')
+#dbname = os.environ.get('DBNAME')
+
+#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
+
+app = Flask(__name__)
+#app.config['SECRET_KEY']='SuperSecretKey'
+#app.config['SQLALCHEMY_DATABASE_URI'] = conn
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
+
+db = SQLAlchemy(app)
+
+class group5_wbpl_materials(db.Model):
+    MaterialsID = db.Column(db.String(15), primary_key=True)
+    Title = db.Column(db.String(255))
+    Creator = db.Column(db.String(255))
+    YearCreated = db.Column(db.String(255))
+    Genre = db.Column(db.String(255))
+    MaterialType = db.Column(db.String(255))
+    Available = db.Column(db.Boolean(True))
+    DateAcquired = db.Column(db.Date())
+    LastModified = db.Column(db.Date())
+
+
+
+class MaterialsForm(FlaskForm):
+    Title = StringField('Title:', validators=[DataRequired()])
+    Creator = StringField('Creator:', validators=[DataRequired()])
+    YearCreated = StringField('Year Created:', validators=[DataRequired()])
+    Genre = StringField('Genre:', validators=[DataRequired()])
+    MaterialType = StringField('MaterialType:', validators=[DataRequired()])
+    Available = StringField('Available:', validators=[DataRequired()])
+    DateAcquired = StringField('Date Acquired:', validators=[DataRequired()])
+    LastModified = StringField('Last Modified:', validators=[DataRequired()])
+
+@app.route('/')
+def index():
+    all_materials= group5_wbpl_materials.query.all()
+    return render_template('index.html', material=all_materials, pageTitle="materials")
+
+@app.route('/add_materials', methods=['GET','POST'])
+def add_meterials():
+    form = Form()
+    if form.validate_on_submit():
+        material = group5_wbpl_materials(Title=form.Title.data, Creator=form.Creator.data, YearCreated = form.YearCreated.data, Genre = form.Genre.data, MaterialType = form.MaterialType.data, Available = form.Available.data, DateAcquired=form.DateAcquired.data, LastModified=form.LastModified.data)
+        db.session.add(material)
+        db.session.commit()
+        return redirect('/')
+
+    return render_template('add_materials.html', form=form, pageTitle='Add materials')
+
+@app.route('/delete_material/<int:MaterialsID>', methods=['GET','POST'])
+def delete_material(MaterialsID):
+    if request.method == 'POST': #if it's a POST request, delete the friend from the database
+        obj = group5_wbpl_materials.query.filter_by(MaterialsID=MaterialsId).first()
+        db.session.delete(obj)
+        db.session.commit()
+        flash('Material was successfully deleted!')
+        return redirect("/")
+
+    else: #if it's a GET request, send them to the home page
+        return redirect("/")
+
+
+if __name__ == '__main__':
+    app.run(debug==True)

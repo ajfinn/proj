@@ -1,0 +1,25 @@
+{%extends 'base.html' %}
+
+{% block body %}
+<div>
+  <h3> Add a New Material </h3>
+
+  <form method ="POST" action="{{ url_for('add_materials')}}">
+
+  {{form.csrf_token}}
+  {{form.Title.label}} {{form.Title(size=20)}}
+  {{form.Creator.label}} {{form.Creator(size=20)}}
+  {{form.Year.label}} {{form.Year(size=20)}}
+  {{form.Genre.label}} {{form.Genre(size=20)}}
+  {{form.Type.label}} {{form.Type(size=20)}}
+  {{form.Available.label}} {{form.Available(size=20)}}
+  {{form.DateAcquired.label}} {{form.DateAcquired(size=20)}}
+  {{form.LastModified.label}} {{form.LastModified(size=20)}}
+
+  <input type="submit" value="Add a New Material">
+
+  </form>
+
+</div>
+
+{% endblock %}
