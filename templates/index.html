@@ -1,29 +1,42 @@
 {%extends 'base.html' %}
 
 {% block body %}
-  <h2> Alec's dogs </h2>
+  <h2> Library Materials </h2>
   <p> <a href="{{url_for('.add_dog')}}"> Add a new dog</a>
   {% if dogs %}
   <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Dog Name</th>
-                <th>Dog Type</th>
-                <th>Dog Age </th>
+                <th>Material ID</th>
+                <th>Type</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Genre</th>
+                <th>ISBN</th>
+                <th>Available?</th>
+                <th>Date Aquired</th>
+                <th>Date Modified</th>
             </tr>
         </thead>
 
         <tbody>
-            {% for row in dogs %}
+            {% for row in materials %}
             <tr>
-                <td> {{ row.dogID }}</td>
-                <td> {{ row.dogName }}</td>
-                <td> {{ row.dogType }}</td>
-                <td> {{ row.age }}</td>
-                <td>
-    <td>
-      <form action="/delete_dog/{{ row.dogID }}" method="POST">
+                <td> {{ row.material_id }}</td>
+                <td> {{ row.type }}</td>
+                <td> {{ row.title }}</td>
+                <td> {{ row.author }}</td>
+                <td> {{ row.year }}</td>
+                <td> {{ row.genre }}</td>
+                <td> {{ row.isbn }}</td>
+                <td> {{ row.available }}</td>
+                <td> {{ row.date_acquired }}</td>
+                <td> {{ row.date_modified }}</td>
+
+
+        <td>
+      <form action="/delete_material/{{ row.material_id }}" method="POST">
         <input type="submit" value="Delete" class="btn btn-danger" />
       </form>
                     </td>
