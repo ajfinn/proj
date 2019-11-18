@@ -3,6 +3,7 @@ secrets.py
 
 #Virtual Environment
 venv/
+env/
 
 # Flask
 instance/*

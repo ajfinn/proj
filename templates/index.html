@@ -2,8 +2,14 @@
 
 {% block body %}
   <h2> Library Materials </h2>
+
+  <form method="POST">
+    <input type="text" autofocus="autofocus" name = "search_string">
+    <input type="submit" formaction="/search" value="Search">
+  </form>
+
   <p> <a href="{{url_for('.add_materials')}}"> Add new materials</a>
-  {% if dogs %}
+  {% if material %}
   <table>
         <thead>
             <tr>
@@ -20,7 +26,7 @@
         </thead>
 
         <tbody>
-            {% for row in materials %}
+            {% for row in material %}
             <tr>
                 <td> {{ row.type }}</td>
                 <td> {{ row.title }}</td>
