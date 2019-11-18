@@ -48,7 +48,7 @@ class MaterialsForm(FlaskForm):
 
 @app.route('/')
 def index():
-    all_materials= group5_wbpl_materials.query.all()
+    all_materials = group5_wbpl_materials.query.all()
     return render_template('index.html', material=all_materials, pageTitle="materials")
 
 @app.route('/add_materials', methods=['GET','POST'])
@@ -62,10 +62,25 @@ def add_meterials():
 
     return render_template('add_materials.html', form=form, pageTitle='Add materials')
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        print('post method')
+        form = request.form
+        search_value = form['search_string']
+        print(search_value)
+        search = "%{0}%".format(search_value)
+        print(search)
+        results = group5_wbpl_materials.query.filter(or_(group5_wbpl_materials.Title.like(search), group5_wbpl_materials.Creator.like(search))).all()
+        print(results)
+        return render_template('index.html', all_materials = results, pageTitle='West Branch Public Library\'s materials', legend="Search Results")
+    else:
+        return redirect('/')
+
 @app.route('/delete_material/<int:MaterialsID>', methods=['GET','POST'])
 def delete_material(MaterialsID):
     if request.method == 'POST': #if it's a POST request, delete the friend from the database
-        obj = group5_wbpl_materials.query.filter_by(MaterialsID=MaterialsId).first()
+        obj = group5_wbpl_materials.query.get_or_404(MaterialsID)
         db.session.delete(obj)
         db.session.commit()
         flash('Material was successfully deleted!')
@@ -74,6 +89,35 @@ def delete_material(MaterialsID):
     else: #if it's a GET request, send them to the home page
         return redirect("/")
 
+@app.route('/materials/<int:MaterialsID>', methods=['GET', 'POST'])
+def get_material(MaterialsID):
+    material = group5_wbpl_materials.query.get_or_404(MaterialsID)
+    return render_template('materials.html', form=material, pageTitle = 'Materials')
+
+@app.route('/materials/<int:MaterialsID>/update', methods=['GET', 'POST'])
+def update_material(MaterialsID):
+    material = group5_wbpl_materials.query.get_or_404(MaterialsID)
+    form = MaterialsForm()
+    if form.validate_on_submit():
+        material.Title = form.Title.data
+        material.Creator = form.Creator.data
+        material.YearCreated = form.YearCreated.data
+        material.Genre = form.Genre.data
+        material.MaterialType = form.MaterialType.data
+        material.Available = form.Available.data
+        material.DateAcquired = form.DateAcquired.data
+        material.LastModified = form.LastModified.data
+        return redirect(url_for('get_material', MaterialsID = MaterialsID))
+    form.Title.data = material.Title
+    form.Creator.data = material.Creator
+    form.YearCreated.data = material.YearCreated
+    form.Genre.data = material.Genre
+    form.MaterialType.data = material.MaterialType
+    form.Available.data = material.Available
+    form.DateAcquired.data = material.DateAcquired
+    form.LastModified.data = material.LastModified
+    return render_template('update_materials.html', form = form, pageTitle='Updated Materials')
+
 
 if __name__ == '__main__':
-    app.run(debug==True)
+    app.run(debug==False)
