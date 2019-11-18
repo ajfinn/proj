@@ -2,12 +2,11 @@
 
 {% block body %}
   <h2> Library Materials </h2>
-  <p> <a href="{{url_for('.add_dog')}}"> Add a new dog</a>
+  <p> <a href="{{url_for('.add_materials')}}"> Add new materials</a>
   {% if dogs %}
   <table>
         <thead>
             <tr>
-                <th>Material ID</th>
                 <th>Type</th>
                 <th>Title</th>
                 <th>Author</th>
@@ -23,7 +22,6 @@
         <tbody>
             {% for row in materials %}
             <tr>
-                <td> {{ row.material_id }}</td>
                 <td> {{ row.type }}</td>
                 <td> {{ row.title }}</td>
                 <td> {{ row.author }}</td>
@@ -37,7 +35,7 @@
 
         <td>
       <form action="/delete_material/{{ row.material_id }}" method="POST">
-        <input type="submit" value="Delete" class="btn btn-danger" />
+        <input type="submit" value="Delete"/>
       </form>
                     </td>
                       </tr>
