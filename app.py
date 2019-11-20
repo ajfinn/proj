@@ -5,6 +5,7 @@ from wtforms import StringField
 from wtforms import IntegerField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 import pymysql
 import secrets
 #import os
@@ -53,8 +54,10 @@ def index():
     return render_template('index.html', material=all_materials, pageTitle="materials")
 
 @app.route('/add_materials', methods=['GET','POST'])
-def add_meterials():
-    form = Form()
+def add_materials():
+    form = MaterialsForm()
+    avl = ['True', 'False']
+    mtype = ['Book', 'Movie', 'Music', 'Magazine']
     if form.validate_on_submit():
         material = group5_wbpl_materials(Title=form.Title.data, Creator=form.Creator.data, YearCreated = form.YearCreated.data, Genre = form.Genre.data, MaterialType = form.MaterialType.data, Available = form.Available.data, DateAcquired=form.DateAcquired.data, LastModified=form.LastModified.data)
         db.session.add(material)
@@ -72,9 +75,9 @@ def search():
         print(search_value)
         search = "%{0}%".format(search_value)
         print(search)
-        results = group5_wbpl_materials.query.filter(or_(group5_wbpl_materials.Title.like(search), group5_wbpl_materials.Creator.like(search))).all()
+        results = group5_wbpl_materials.query.filter(or_(group5_wbpl_materials.Title.like(search), group5_wbpl_materials.Creator.like(search), group5_wbpl_materials.Genre.like(search))).all()
         print(results)
-        return render_template('index.html', all_materials = results, pageTitle='West Branch Public Library\'s materials', legend="Search Results")
+        return render_template('index.html', material = results, pageTitle='West Branch Public Library\'s materials', legend="Search Results")
     else:
         return redirect('/')
 

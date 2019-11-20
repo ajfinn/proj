@@ -3,8 +3,9 @@
 
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="stylesheet.css">
     <title>Library Database</title>
-	
+
 	<script>
     $(function() {
    $('#flash').delay(500).fadeIn('normal', function() {
@@ -12,14 +13,13 @@
    });
 });
 </script>
+
 </head>
-
   <body>
+    {% block body %}
 
- This is a database of library materials
- 
-    
+    {% endblock %}
+
   </body>
 
 </html>
-

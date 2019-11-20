@@ -3,18 +3,46 @@
 {% block body %}
 <div>
   <h3> Add a New Material </h3>
+  <a href="{{url_for('index')}}"> Home </a>
+  <br>
 
   <form method ="POST" action="{{ url_for('add_materials')}}">
 
-  {{form.csrf_token}}
-  {{form.Title.label}} {{form.Title(size=20)}}
-  {{form.Creator.label}} {{form.Creator(size=20)}}
-  {{form.Year.label}} {{form.Year(size=20)}}
-  {{form.Genre.label}} {{form.Genre(size=20)}}
-  {{form.Type.label}} {{form.Type(size=20)}}
-  {{form.Available.label}} {{form.Available(size=20)}}
-  {{form.DateAcquired.label}} {{form.DateAcquired(size=20)}}
-  {{form.LastModified.label}} {{form.LastModified(size=20)}}
+    {{form.csrf_token}}
+    <table style = "width=100%">
+      <tr>
+        <th>{{form.Title.label}}</th>
+        <th>{{form.Title}}</th>
+      </tr>
+      <tr>
+        <th>{{form.Creator.label}}</th>
+        <th>{{form.Creator}}</th>
+      </tr>
+      <tr>
+        <th>{{form.YearCreated.label('Year Created:')}}</th>
+        <th>{{form.YearCreated}}</th>
+      </tr>
+      <tr>
+        <th>{{form.Genre.label}}</th>
+        <th>{{form.Genre}}</th>
+      </tr>
+      <tr>
+        <th>{{form.MaterialType.label('Material Type:')}}</th>
+        <th>{{form.MaterialType}}</th>
+      </tr>
+      <tr>
+        <th>{{form.Available.label}}</th>
+        <th>{{form.Available}}</th>
+      </tr>
+      <tr>
+        <th>{{form.DateAcquired.label('Date Acquired:')}}</th>
+        <th>{{form.DateAcquired}}</th>
+      </tr>
+      <tr>
+        <th>{{form.LastModified.label('Last Modified:')}}</th>
+        <th>{{form.LastModified}}</th>
+      </tr>
+    </table>
 
   <input type="submit" value="Add a New Material">
 

@@ -8,7 +8,10 @@
     <input type="submit" formaction="/search" value="Search">
   </form>
 
-  <p> <a href="{{url_for('.add_materials')}}"> Add new materials</a>
+  <p>
+    <a href="{{url_for('index')}}"> Home </a>
+    <br>
+    <a href="{{url_for('.add_materials')}}"> Add new materials</a>
   {% if material %}
   <table>
         <thead>
@@ -18,29 +21,27 @@
                 <th>Author</th>
                 <th>Year</th>
                 <th>Genre</th>
-                <th>ISBN</th>
-                <th>Available?</th>
+                <th>Available</th>
                 <th>Date Aquired</th>
-                <th>Date Modified</th>
+                <th>Date Last Modified</th>
             </tr>
         </thead>
 
         <tbody>
             {% for row in material %}
             <tr>
-                <td> {{ row.type }}</td>
-                <td> {{ row.title }}</td>
-                <td> {{ row.author }}</td>
-                <td> {{ row.year }}</td>
-                <td> {{ row.genre }}</td>
-                <td> {{ row.isbn }}</td>
-                <td> {{ row.available }}</td>
-                <td> {{ row.date_acquired }}</td>
-                <td> {{ row.date_modified }}</td>
+                <td> {{ row.MaterialType }}</td>
+                <td> {{ row.Title }}</td>
+                <td> {{ row.Creator }}</td>
+                <td> {{ row.YearCreated }}</td>
+                <td> {{ row.Genre }}</td>
+                <td> {{ row.Available }}</td>
+                <td> {{ row.DateAcquired }}</td>
+                <td> {{ row.LastModified }}</td>
 
 
         <td>
-      <form action="/delete_material/{{ row.material_id }}" method="POST">
+      <form action="/delete_material/{{ row.MaterialsID}}" method="POST">
         <input type="submit" value="Delete"/>
       </form>
                     </td>
