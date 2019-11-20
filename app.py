@@ -26,7 +26,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation w
 db = SQLAlchemy(app)
 
 class group5_wbpl_materials(db.Model):
-    MaterialsID = db.Column(db.String(15), primary_key=True)
+    MaterialsID = db.Column(db.Integer, primary_key=True)
     Title = db.Column(db.String(255))
     Creator = db.Column(db.String(255))
     YearCreated = db.Column(db.String(255))
@@ -56,10 +56,9 @@ def index():
 @app.route('/add_materials', methods=['GET','POST'])
 def add_materials():
     form = MaterialsForm()
-    avl = ['True', 'False']
-    mtype = ['Book', 'Movie', 'Music', 'Magazine']
     if form.validate_on_submit():
-        material = group5_wbpl_materials(Title=form.Title.data, Creator=form.Creator.data, YearCreated = form.YearCreated.data, Genre = form.Genre.data, MaterialType = form.MaterialType.data, Available = form.Available.data, DateAcquired=form.DateAcquired.data, LastModified=form.LastModified.data)
+        avl = 1
+        material = group5_wbpl_materials(Title=form.Title.data, Creator=form.Creator.data, YearCreated = form.YearCreated.data, Genre = form.Genre.data, MaterialType = form.MaterialType.data, Available = avl, DateAcquired=form.DateAcquired.data, LastModified=form.LastModified.data)
         db.session.add(material)
         db.session.commit()
         return redirect('/')

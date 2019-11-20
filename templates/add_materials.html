@@ -28,11 +28,14 @@
       </tr>
       <tr>
         <th>{{form.MaterialType.label('Material Type:')}}</th>
-        <th>{{form.MaterialType}}</th>
-      </tr>
-      <tr>
-        <th>{{form.Available.label}}</th>
-        <th>{{form.Available}}</th>
+        <th>
+          <select name="Material Type">
+            <option value="Book">Book</option>
+            <option value="Movie">Movie</option>
+            <option value="Music">Music</option>
+            <option value="Magazine">Magazine</option>
+          </select>
+        </th>
       </tr>
       <tr>
         <th>{{form.DateAcquired.label('Date Acquired:')}}</th>
