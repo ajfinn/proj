@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+<p><a href="{{ url_for('index')}}"> Home </a></p>
+  <h3>{{ legend }}</h3>
+
+  {% with messages = get_flashed_messages() %}
+   {% if messages %}
+   <div class="alert alert-warning alert-dismissible fade show" role="alert" id="flash">
+     {% for message in messages %}
+     <strong>Alert!</strong> {{ message }}
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+       <span aria-hidden="true">&times;</span>
+     </button>
+     {% endfor %}
+     {% endif %}
+     {% endwith %}
+   </div>
+
+
+{% if form %}
+  <form method="POST">
+
+    {{ form.csrf_token }}
+    {{ form.Title.label }} {{ form.Title }}
+    {{ form.Creator.label }} {{ form.Creator }}
+    {{ form.YearCreated.label }} {{ form.YearCreated }}
+    {{ form.Genre.label }} {{ form.Genre }}
+    {{ form.MaterialType.label }} {{ form.MaterialType }}
+    {{ form.Available.label }} {{ form.Available }}
+    {{ form.DateAcquired.label }} {{ form.DateAcquired }}
+    {{ form.LastModified.label }} {{ form.LastModified }}
+
+    <input type="submit" formaction="{{url_for('update_material', material_id=form.MaterialsID)}}" value="Update">
+    <input type="submit" formaction="{{url_for('delete_material', material_id=form.MaterialsID)}}" value="Delete">
+
+
+
+  </form>
+{% endif %}
+</div>
+{% endblock %}

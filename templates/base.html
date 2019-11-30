@@ -3,10 +3,14 @@
 
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="stylesheet.css">
-    <title>Library Database</title>
+    <title>{{ pageTitle }}</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-	<script>
+<style>
+#flash { display:none; background-color:white; color:red}
+</style>
+
+<script>
     $(function() {
    $('#flash').delay(500).fadeIn('normal', function() {
       $(this).delay(2500).fadeOut();
@@ -15,11 +19,15 @@
 </script>
 
 </head>
+
   <body>
-    {% block body %}
+      <h1> West Branch Public Library Catalogue </h1>
+      <hr>
 
-    {% endblock %}
+      {% block body %}
 
-  </body>
+	  {% endblock %}
+
+ </body>
 
 </html>

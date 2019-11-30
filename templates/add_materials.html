@@ -1,56 +1,40 @@
-{%extends 'base.html' %}
-
+{% extends 'base.html' %}
 {% block body %}
 <div>
-  <h3> Add a New Material </h3>
-  <a href="{{url_for('index')}}"> Home </a>
-  <br>
+<p><a href="{{ url_for('index')}}"> Home </a></p>
+  <h3>{{ legend }}</h3>
 
-  <form method ="POST" action="{{ url_for('add_materials')}}">
+  {% with messages = get_flashed_messages() %}
+   {% if messages %}
+   <div class="alert alert-warning alert-dismissible fade show" role="alert" id="flash">
+     {% for message in messages %}
+     <strong>Alert!</strong> {{ message }}
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+       <span aria-hidden="true">&times;</span>
+     </button>
+     {% endfor %}
+     {% endif %}
+     {% endwith %}
+   </div>
 
-    {{form.csrf_token}}
-    <table style = "width=100%">
-      <tr>
-        <th>{{form.Title.label}}</th>
-        <th>{{form.Title}}</th>
-      </tr>
-      <tr>
-        <th>{{form.Creator.label}}</th>
-        <th>{{form.Creator}}</th>
-      </tr>
-      <tr>
-        <th>{{form.YearCreated.label('Year Created:')}}</th>
-        <th>{{form.YearCreated}}</th>
-      </tr>
-      <tr>
-        <th>{{form.Genre.label}}</th>
-        <th>{{form.Genre}}</th>
-      </tr>
-      <tr>
-        <th>{{form.MaterialType.label('Material Type:')}}</th>
-        <th>
-          <select name="Material Type">
-            <option value="Book">Book</option>
-            <option value="Movie">Movie</option>
-            <option value="Music">Music</option>
-            <option value="Magazine">Magazine</option>
-          </select>
-        </th>
-      </tr>
-      <tr>
-        <th>{{form.DateAcquired.label('Date Acquired:')}}</th>
-        <th>{{form.DateAcquired}}</th>
-      </tr>
-      <tr>
-        <th>{{form.LastModified.label('Last Modified:')}}</th>
-        <th>{{form.LastModified}}</th>
-      </tr>
-    </table>
 
-  <input type="submit" value="Add a New Material">
+
+
+  <form method="POST" action="">
+
+    {{ form.csrf_token }}
+    {{ form.Title.label }} {{ form.Title(size = 20) }}
+    {{ form.Creator.label }} {{ form.Creator(size = 20) }}
+    {{ form.YearCreated.label }} {{ form.YearCreated(size = 20) }}
+    {{ form.Genre.label }} {{ form.Genre(size = 20) }}
+    {{ form.MaterialType.label }} {{ form.MaterialType(size = 20) }}
+    {{ form.Available.label }} {{ form.Available(size = 20) }}
+    {{ form.DateAcquired.label }} {{ form.DateAcquired(size = 20) }}
+    {{ form.LastModified.label }} {{ form.LastModified(size = 20) }}
+
+    <input type="submit" value="Save">
 
   </form>
 
 </div>
-
 {% endblock %}
