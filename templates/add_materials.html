@@ -20,19 +20,49 @@
 
 
 
-  <form method="POST" action="">
+  <form method ="POST" action="">
 
     {{ form.csrf_token }}
-    {{ form.Title.label }} {{ form.Title(size = 20) }}
-    {{ form.Creator.label }} {{ form.Creator(size = 20) }}
-    {{ form.YearCreated.label }} {{ form.YearCreated(size = 20) }}
-    {{ form.Genre.label }} {{ form.Genre(size = 20) }}
-    {{ form.MaterialType.label }} {{ form.MaterialType(size = 20) }}
-    {{ form.Available.label }} {{ form.Available(size = 20) }}
-    {{ form.DateAcquired.label }} {{ form.DateAcquired(size = 20) }}
-    {{ form.LastModified.label }} {{ form.LastModified(size = 20) }}
+    <table style = "width=100%">
+      <tr>
+        <th>{{ form.Title.label }}</th>
+        <th>{{ form.Title }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.Creator.label }}</th>
+        <th>{{ form.Creator }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.YearCreated.label }}</th>
+        <th>{{ form.YearCreated }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.Genre.label }}</th>
+        <th>{{ form.Genre }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.MaterialType.label }}</th>
+        <th>
+          {{ form.MaterialType }}
+        </th>
+      </tr>
+      <tr>
+          <th>{{ form.Available.label }}</th>
+          <th>
+            {{ form.Available }}
+        </th>
+      </tr>
+      <tr>
+        <th>{{ form.DateAcquired.label }}</th>
+        <th>{{ form.DateAcquired }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.LastModified.label }}</th>
+        <th>{{ form.LastModified }}</th>
+      </tr>
+    </table>
 
-    <input type="submit" value="Save">
+    <input type="submit" value="Add New Material">
 
   </form>
 

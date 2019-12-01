@@ -3,13 +3,13 @@
     {% extends 'base.html' %}
     
     {% block body %}
-<h3> Search for Animals by Country: </h3>
+<h3> Search for Materials by Title: </h3>
 <form method="POST">
     <input type="text" autofocus="autofocus" name="search_string">
     <input type="submit" formaction="/search" value="Search">
 </form>
 
-    <p><a href="{{ url_for('add_material')}}"> Add a new material</a></p>
+    <p><a href="{{ url_for('add_materials')}}"> Add a new material</a></p>
 
 {% with messages = get_flashed_messages() %}
  {% if messages %}
