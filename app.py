@@ -49,8 +49,8 @@ class group5_wbpl_materials(db.Model):
     Available = db.Column(db.String(10))
     DateAcquired = db.Column(db.Date)
     LastModified = db.Column(db.Date)
-    
-    
+
+
     def __repr__(self):
         return "id: {0} | Title: {1} | Creator: {2} | Year Created: {3} | Genre: {4} | Type: {5} | Available: {6} | Date Acquired: {7} | Last Modified: {8}".format(self.MaterialsID, self.Title, self.Creator, self.YearCreated, self.Genre, self.MaterialType, self.Available, self.DateAcquired, self.LastModified)
 
@@ -75,7 +75,7 @@ class MaterialForm(FlaskForm):
     Available = StringField('Available:', validators = [DataRequired()])
     DateAcquired = DateField('Date Acquired:', validators = [DataRequired()])
     LastModified = DateField('Last Modified On:', validators = [DataRequired()])
-    
+
 
 @app.route('/')
 def index():
@@ -93,6 +93,11 @@ def search():
         else:
             return redirect('/')
 
+@app.route('/AllMaterials', methods=['GET', 'POST'])
+def AllMaterials():
+    all_materials = group5_wbpl_materials.query.all()
+    return render_template('AllMaterials.html', materials = all_materials, pageTitle = 'West Branch Public Library Catalogue')
+
 @app.route('/material/new', methods =['GET', 'POST'])
 def add_materials():
     form = MaterialForm()
@@ -101,7 +106,7 @@ def add_materials():
         db.session.add(material)
         db.session.commit()
         return redirect('/')
-    
+
     return render_template('add_materials.html', form=form, pageTitle='Add a New Material', legend="Add a New Material")
 
 
@@ -137,7 +142,7 @@ def update_material(material_id):
     form.LastModified.data = material.LastModified
     return render_template('add_materials.html', form=form, pageTitle='Update Post',
                             legend="Update A Material")
-    
+
 @app.route('/material/<int:material_id>/delete', methods=['POST'])
 def delete_material(material_id):
     if request.method == 'POST': #if it's a POST request, delete the friend from the database
