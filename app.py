@@ -50,6 +50,19 @@ class group5_wbpl_materials(db.Model):
     DateAcquired = db.Column(db.Date)
     LastModified = db.Column(db.Date)
 
+class group5_wbpl_patrons(db.Model):
+    patron_id = db.Column(db.Integer, primary_key=True)
+    First_Name = db.Column(db.String(25))
+    Last_Name = db.Column(db.String(25))
+    Email = db.Column(db.String(50))
+    Phone = db.Column(db.String(15))
+    Address = db.Column(db.String(100))
+    City = db.Column(db.String(25))
+    State = db.Column(db.String(2))
+    Zipcode = db.Column(db.String(5))
+    Birthdate = db.Column(db.Date)
+    created_at = db.Column(db.Date)
+
 
     def __repr__(self):
         return "id: {0} | Title: {1} | Creator: {2} | Year Created: {3} | Genre: {4} | Type: {5} | Available: {6} | Date Acquired: {7} | Last Modified: {8}".format(self.MaterialsID, self.Title, self.Creator, self.YearCreated, self.Genre, self.MaterialType, self.Available, self.DateAcquired, self.LastModified)
@@ -79,17 +92,16 @@ class MaterialForm(FlaskForm):
 
 @app.route('/')
 def index():
-    all_materials = group5_wbpl_materials.query.all()
-    return render_template('index.html', materials = all_materials, pageTitle = 'West Branch Public Library Catalogue')
+    return render_template('index.html', pageTitle = 'West Branch Public Library Home')
 
-@app.route('/search', methods=['GET', 'POST'])
-def search():
+@app.route('/searchMaterials', methods=['GET', 'POST'])
+def searchMaterials():
         if request.method == 'POST':
             form = request.form
             search_value = form['search_string']
             search = "%{0}%".format(search_value)
             results = group5_wbpl_materials.query.filter(group5_wbpl_materials.Title.like(search)).all()
-            return render_template('index.html', materials = results, pageTitle = 'West Branch Public Library Catalogue', legend="Search Results")
+            return render_template('AllMaterials.html', materials = results, pageTitle = 'West Branch Public Library Catalogue', legend="Search Results")
         else:
             return redirect('/')
 
@@ -154,6 +166,26 @@ def delete_material(material_id):
     else: #if it's a GET request, send them to the home page
         return redirect("/")
 
+@app.route('/searchPatrons', methods=['GET', 'POST'])
+def searchPatrons():
+        if request.method == 'POST':
+            form = request.form
+            search_value = form['search_string']
+            search = "%{0}%".format(search_value)
+            results = group5_wbpl_patrons.query.filter(group5_wbpl_patrons.First_Name.like(search)).all()
+            return render_template('AllPatrons.html', patrons = results, pageTitle = 'West Branch Public Library Patrons', legend="Search Results")
+        else:
+            return redirect('/')
+
+@app.route('/AllPatrons', methods=['GET', 'POST'])
+def AllPatrons():
+    all_patrons = group5_wbpl_patrons.query.all()
+    return render_template('AllPatrons.html', patrons = all_patrons, pageTitle = 'West Branch Public Library Patrons')
+
+@app.route('/patron/<int:patron_id>', methods=['GET','POST'])
+def patron(patron_id):
+    patron = group5_wbpl_patrons.query.get_or_404(patron_id)
+    return render_template('patron.html', form=patron, pageTitle='Patron Details')
 
 if __name__ == '__main__':
     app.run(debug=True)
