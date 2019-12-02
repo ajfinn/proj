@@ -1,7 +1,7 @@
 
 
     {% extends 'base.html' %}
-    
+
     {% block body %}
 <h3> Search for Materials by Title: </h3>
 <form method="POST">
@@ -23,7 +23,7 @@
    {% endif %}
    {% endwith %}
  </div>
- 
+
          <h3>{{ legend }}</h3>
     {% if materials %}
         <table>
@@ -40,7 +40,7 @@
                     <th>LastModified</th>
                 </tr>
             </thead>
-            
+
             <tbody>
                 {% for row in materials %}
                 <tr>
@@ -53,17 +53,16 @@
                     <td> {{ row.Available }} </td>
                     <td> {{ row.DateAcquired }} </td>
                     <td> {{ row.LastModified }} </td>
-                    
+
                         <td>
                 <form action="{{ url_for('material', material_id=row.MaterialsID) }}" method="POST">
                     <input type="submit" value="Details" class="btn btn-info" />
                 </form>
             </td>
-            
+
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% endif %}
     {% endblock %}
-    

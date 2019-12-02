@@ -20,16 +20,41 @@
 
 {% if form %}
   <form method="POST">
+    <table>
+        <tr>
+          <th>Title: </th>
+          <th>{{ form.Title }}</th>
+        </tr>
+        <tr>
+          <th>Creator: </th>
+          <th>{{ form.Creator }}</th>
+        </tr>
+        <tr>
+          <th>Year Created: </th>
+          <th>{{ form.YearCreated }}</th>
+        </tr>
+        <tr>
+          <th>Genre: </th>
+          <th>{{ form.Genre }}</th>
+        </tr>
+        <tr>
+          <th>Material Type: </th>
+          <th>{{ form.MaterialType }}</th>
+        </tr>
+        <tr>
+          <th>Available: </th>
+          <th>{{ form.Available }}</th>
+        </tr>
+        <tr>
+          <th>Date Acquired: </th>
+          <th>{{ form.DateAcquired }}</th>
+        </tr>
+        <tr>
+          <th>Last Modified: </th>
+          <th>{{ form.LastModified }}</th>
+        </tr>
+    </table>
 
-    {{ form.csrf_token }}
-    {{ form.Title.label }} {{ form.Title }}
-    {{ form.Creator.label }} {{ form.Creator }}
-    {{ form.YearCreated.label }} {{ form.YearCreated }}
-    {{ form.Genre.label }} {{ form.Genre }}
-    {{ form.MaterialType.label }} {{ form.MaterialType }}
-    {{ form.Available.label }} {{ form.Available }}
-    {{ form.DateAcquired.label }} {{ form.DateAcquired }}
-    {{ form.LastModified.label }} {{ form.LastModified }}
 
     <input type="submit" formaction="{{url_for('update_material', material_id=form.MaterialsID)}}" value="Update">
     <input type="submit" formaction="{{url_for('delete_material', material_id=form.MaterialsID)}}" value="Delete">
