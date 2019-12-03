@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 <div>
-<p><a href="{{ url_for('AllPatrons')}}"> All Patrons </a></p>
+<p><a href="{{ url_for('AllPatrons')}}"><button> All Patrons </button></a></p>
   <h3>{{ legend }}</h3>
 
   {% with messages = get_flashed_messages() %}
@@ -62,6 +62,7 @@
           <th>{{ form.created_at }}</th>
         </tr>
     </table>
+
 
 
 
