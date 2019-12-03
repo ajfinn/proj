@@ -116,6 +116,14 @@ class PatronForm(FlaskForm):
     Birthdate = StringField('Birthdate:', validators = [DataRequired()])
     created_at = StringField('Created on:', validators = [DataRequired()])
 
+class CirculationForm(FlaskForm):
+    patron_id = IntegerField('Patron ID:', validators = [DataRequired()])
+    MaterialsID = IntegerField('Material ID:', validators = [DataRequired()])
+    checked_out = StringField('Checked Out:', validators = [DataRequired()])
+    title = StringField('Title:', validators = [DataRequired()])
+    material_type = StringField('Material Type:', validators = [DataRequired()])
+    checkout_date = DateField('Checkout Date:', validators = [DataRequired()])
+    due_date = DateField('Due Date:', validators = [DataRequired()])
 
 @app.route('/')
 def index():
@@ -263,7 +271,23 @@ def delete_patron(patron_id):
 @app.route('/AllCirculations', methods=['GET', 'POST'])
 def AllCirculations():
     all_circulations = group5_wbpl_circulation.query.all()
-    return render_template('AllCirculations.html', circulations = all_circulations, pageTitle = 'West Branch Public Library Circulation')
+    return render_template('AllCirculations.html', circulations = all_circulations, pageTitle = 'West Branch Public Library Circulations')
+
+@app.route('/Check_Out', methods =['GET', 'POST'])
+def check_out():
+    form = CirculationForm()
+    if form.validate_on_submit():
+        circulation = group5_wbpl_circulation(checked_out = form.checked_out.data, title = form.title.data, material_type = form.material_type.data, checkout_date = form.checkout_date.data, due_date = form.due_date.data)
+        db.session.add(circulation)
+        db.session.commit()
+        return redirect('/AllCirculations')
+    
+    return render_template('Check_Out.html', form=form, pageTitle='Check-out Material', legend="Check-Out")
+"""
+@app.route('Check_In', methods =['GET', 'POST'])
+def check_in():
+    """
+
 
 
 if __name__ == '__main__':
