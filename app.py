@@ -49,7 +49,7 @@ class group5_wbpl_materials(db.Model):
     Available = db.Column(db.String(10))
     DateAcquired = db.Column(db.Date)
     LastModified = db.Column(db.Date)
-    
+
     def __repr__(self):
         return "id: {0} | Title: {1} | Creator: {2} | Year Created: {3} | Genre: {4} | Type: {5} | Available: {6} | Date Acquired: {7} | Last Modified: {8}".format(self.MaterialsID, self.Title, self.Creator, self.YearCreated, self.Genre, self.MaterialType, self.Available, self.DateAcquired, self.LastModified)
 
@@ -79,7 +79,7 @@ class group5_wbpl_circulation(db.Model):
     material_type = db.Column(db.String)
     checkout_date = db.Column(db.Date)
     due_date = db.Column(db.Date)
-    
+
     def __repr__(self):
         return "CirculationID: {0} | PatronID: {1} | MaterialID: {2} | Checked Out: {3} | Title: {4} | Material Type: {5} | Checkout Date: {6} | Due Date: {7}".format(self.circulation_id, self.patron_id, self.MaterialsID, self.checked_out, self.title, self.material_type, self.checkout_date, self.due_date)
 """
@@ -256,6 +256,17 @@ def update_patron(patron_id):
     return render_template('add_patrons.html', form=form, pageTitle='Update Patron',
                             legend="Update A Patron")
 
+@app.route('/patron/new', methods =['GET', 'POST'])
+def add_patrons():
+    form = PatronForm()
+    if form.validate_on_submit():
+        patron = group5_wbpl_patrons(First_Name = form.First_Name.data, Last_Name = form.Last_Name.data, Email = form.Email.data, Phone = form.Phone.data, Address = form.Address.data, City = form.City.data, State = form.State.data, Zipcode = form.Zipcode.data, Birthdate = form.Birthdate.data, created_at = form.created_at.data)
+        db.session.add(patron)
+        db.session.commit()
+        return redirect('/')
+
+    return render_template('add_patrons.html', form=form, pageTitle='Add a New Patron', legend="Add a New Patron")
+
 
 @app.route('/patron/<int:patron_id>/delete', methods=['POST'])
 def delete_patron(patron_id):
@@ -267,7 +278,7 @@ def delete_patron(patron_id):
         return redirect("/AllPatrons")
     else: #if it's a GET request, send them to the home page
         return redirect("/AllPatrons")
-    
+
 @app.route('/AllCirculations', methods=['GET', 'POST'])
 def AllCirculations():
     all_circulations = group5_wbpl_circulation.query.all()
@@ -281,7 +292,7 @@ def check_out():
         db.session.add(circulation)
         db.session.commit()
         return redirect('/AllCirculations')
-    
+
     return render_template('Check_Out.html', form=form, pageTitle='Check-out Material', legend="Check-Out")
 """
 @app.route('Check_In', methods =['GET', 'POST'])
