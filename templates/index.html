@@ -1,10 +1,10 @@
     {% extends 'base.html' %}
-    
+
     {% block body %}
 
-    <p><a href="{{ url_for('AllMaterials')}}"> Materials</a></p>
-    <p><a href="{{ url_for('AllPatrons')}}"> Patrons</a></p>
-    <p><a href="{{ url_for('AllCirculations')}}"> Check-Out/In Materials</a></p>
+    <p><a href="{{ url_for('AllMaterials')}}"><button> Materials</button></a></p>
+    <p><a href="{{ url_for('AllPatrons')}}"><button> Patrons</button></a></p>
+    <p><a href="{{ url_for('AllCirculations')}}"><button> Check-Out/In Materials</button></a></p>
 
          <h3>{{ legend }}</h3>
             </tbody>

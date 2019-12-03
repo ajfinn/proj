@@ -4,7 +4,7 @@
 
     {% block body %}
 
-<p><a href="{{ url_for('index')}}"> Home </a></p>
+<p><a href="{{ url_for('index')}}"><button> Home </button></a></p>
 
 <h3> Search for Materials by Title: </h3>
 <form method="POST">
@@ -12,7 +12,7 @@
     <input type="submit" formaction="/searchMaterials" value="Search">
 </form>
 
-    <p><a href="{{ url_for('add_materials')}}"> Add a new material</a></p>
+    <p><a href="{{ url_for('add_materials')}}"><button> Add a new material</button></a></p>
 
 {% with messages = get_flashed_messages() %}
  {% if messages %}
