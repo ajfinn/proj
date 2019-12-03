@@ -48,8 +48,8 @@ class group5_wbpl_materials(db.Model):
     MaterialType = db.Column(db.String(25))
     Available = db.Column(db.String(10))
     DateAcquired = db.Column(db.Date)
-    LastModified = db.Column(db.Date)
-
+    LastModified = db.Column(db.Date) 
+    
     def __repr__(self):
         return "id: {0} | Title: {1} | Creator: {2} | Year Created: {3} | Genre: {4} | Type: {5} | Available: {6} | Date Acquired: {7} | Last Modified: {8}".format(self.MaterialsID, self.Title, self.Creator, self.YearCreated, self.Genre, self.MaterialType, self.Available, self.DateAcquired, self.LastModified)
 
@@ -67,18 +67,20 @@ class group5_wbpl_patrons(db.Model):
     created_at = db.Column(db.Date)
 
 
+
     def __repr__(self):
         return "id: {0} | First Name: {1} | Last Name: {2} | Email: {3} | Phone: {4} | Address: {5} | City: {6} | State: {7} | Zipcode: {8} | Birthdate: {9} | Created: {10}".format(self.patron_id, self.First_Name, self.Last_Name, self.Email, self.Phone, self.Address, self.City, self.State, self.Zipcode, self.Birthdate, self.created_at)
 
 class group5_wbpl_circulation(db.Model):
     circulation_id = db.Column(db.Integer, primary_key=True)
-    patron_id = db.Column(db.Integer, foreign_key=True)
-    MaterialsID = db.Column(db.Integer, foreign_key=True)
+    patron_id = db.Column(db.Integer) #foreign_key=True)
+    MaterialsID = db.Column(db.Integer) #foreign_key=True)
     checked_out = db.Column(db.Boolean)
     title = db.Column(db.String)
     material_type = db.Column(db.String)
     checkout_date = db.Column(db.Date)
     due_date = db.Column(db.Date)
+
 
     def __repr__(self):
         return "CirculationID: {0} | PatronID: {1} | MaterialID: {2} | Checked Out: {3} | Title: {4} | Material Type: {5} | Checkout Date: {6} | Due Date: {7}".format(self.circulation_id, self.patron_id, self.MaterialsID, self.checked_out, self.title, self.material_type, self.checkout_date, self.due_date)
@@ -124,6 +126,7 @@ class CirculationForm(FlaskForm):
     material_type = StringField('Material Type:', validators = [DataRequired()])
     checkout_date = DateField('Checkout Date:', validators = [DataRequired()])
     due_date = DateField('Due Date:', validators = [DataRequired()])
+
 
 @app.route('/')
 def index():
@@ -294,6 +297,7 @@ def check_out():
         return redirect('/AllCirculations')
 
     return render_template('Check_Out.html', form=form, pageTitle='Check-out Material', legend="Check-Out")
+    
 
 @app.route('/Check_In', methods =['GET', 'POST'])
 def check_in():
