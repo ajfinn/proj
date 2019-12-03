@@ -49,6 +49,9 @@ class group5_wbpl_materials(db.Model):
     Available = db.Column(db.String(10))
     DateAcquired = db.Column(db.Date)
     LastModified = db.Column(db.Date)
+    
+    def __repr__(self):
+        return "id: {0} | Title: {1} | Creator: {2} | Year Created: {3} | Genre: {4} | Type: {5} | Available: {6} | Date Acquired: {7} | Last Modified: {8}".format(self.MaterialsID, self.Title, self.Creator, self.YearCreated, self.Genre, self.MaterialType, self.Available, self.DateAcquired, self.LastModified)
 
 class group5_wbpl_patrons(db.Model):
     patron_id = db.Column(db.Integer, primary_key=True)
@@ -65,7 +68,7 @@ class group5_wbpl_patrons(db.Model):
 
 
     def __repr__(self):
-        return "id: {0} | Title: {1} | Creator: {2} | Year Created: {3} | Genre: {4} | Type: {5} | Available: {6} | Date Acquired: {7} | Last Modified: {8}".format(self.MaterialsID, self.Title, self.Creator, self.YearCreated, self.Genre, self.MaterialType, self.Available, self.DateAcquired, self.LastModified)
+        return "id: {0} | First Name: {1} | Last Name: {2} | Email: {3} | Phone: {4} | Address: {5} | City: {6} | State: {7} | Zipcode: {8} | Birthdate: {9} | Created: {10}".format(self.patron_id, self.First_Name, self.Last_Name, self.Email, self.Phone, self.Address, self.City, self.State, self.Zipcode, self.Birthdate, self.created_at)
 
 """
 class MaterialForm(FlaskForm):
@@ -89,10 +92,22 @@ class MaterialForm(FlaskForm):
     DateAcquired = DateField('Date Acquired:', validators = [DataRequired()])
     LastModified = DateField('Last Modified On:', validators = [DataRequired()])
 
+class PatronForm(FlaskForm):
+    First_Name = StringField('First Name:', validators = [DataRequired()])
+    Last_Name = StringField('Last Name', validators = [DataRequired()])
+    Email = StringField('Email', validators = [DataRequired()])
+    Phone = StringField('Phone', validators = [DataRequired()])
+    Address = StringField('Address', validators = [DataRequired()])
+    City = StringField('City:', validators = [DataRequired()])
+    State = StringField('State:', validators = [DataRequired()])
+    Zipcode = StringField('Zipcode:', validators = [DataRequired()])
+    Birthdate = StringField('Birthdate:', validators = [DataRequired()])
+    created_at = StringField('Created on:', validators = [DataRequired()])
+
 
 @app.route('/')
 def index():
-    return render_template('index.html', pageTitle = 'West Branch Public Library Home')
+    return render_template('index.html', pageTitle = 'West Branch Public Library')
 
 @app.route('/searchMaterials', methods=['GET', 'POST'])
 def searchMaterials():

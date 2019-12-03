@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+<p><a href="{{ url_for('master')}}"> Home </a></p>
+  <h3>{{ legend }}</h3>
+
+  {% with messages = get_flashed_messages() %}
+   {% if messages %}
+   <div class="alert alert-warning alert-dismissible fade show" role="alert" id="flash">
+     {% for message in messages %}
+     <strong>Alert!</strong> {{ message }}
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+       <span aria-hidden="true">&times;</span>
+     </button>
+     {% endfor %}
+     {% endif %}
+     {% endwith %}
+   </div>
+
+
+
+
+  <form method ="POST" action="">
+
+    {{ form.csrf_token }}
+    <table style = "width=100%">
+      <tr>
+        <th>{{ form.First_Name.label }}</th>
+        <th>{{ form.First_Name }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.Last_Name.label }}</th>
+        <th>{{ form.Last_Name }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.Email.label }}</th>
+        <th>{{ form.Email }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.Phone.label }}</th>
+        <th>{{ form.Phone }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.Address.label }}</th>
+        <th>
+          {{ form.Address }}
+        </th>
+      </tr>
+      <tr>
+          <th>{{ form.City.label }}</th>
+          <th>
+            {{ form.City }}
+        </th>
+      </tr>
+      <tr>
+        <th>{{ form.State.label }}</th>
+        <th>{{ form.State }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.Zipcode.label }}</th>
+        <th>{{ form.Zipcode }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.Birthdate.label }}</th>
+        <th>{{ form.Birthdate }}</th>
+      </tr>
+      <tr>
+        <th>{{ form.created_at.label }}</th>
+        <th>{{ form.created_ad }}</th>
+      </tr>
+    </table>
+
+    <input type="submit" value="Add New Patron">
+
+  </form>
+
+</div>
+{% endblock %}
