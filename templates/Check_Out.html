@@ -2,7 +2,7 @@
 {% block body %}
 
 <div>
-<p><a href="{{ url_for('AllCirculations')}}"><button> Back </button></a></p>
+
   <h3>{{ legend }}</h3>
 
   {% with messages = get_flashed_messages() %}
@@ -32,18 +32,6 @@
       <tr>
         <th>{{ form.MaterialsID.label }}</th>
         <th>{{ form.MaterialsID }}</th>
-      </tr>
-      <tr>
-        <th>{{ form.checked_out.label }}</th>
-        <th>{{ form.checked_out }}</th>
-      </tr>
-      <tr>
-        <th>{{ form.title.label }}</th>
-        <th>{{ form.title }}</th>
-      </tr>
-      <tr>
-        <th>{{ form.material_type.label }}</th>
-        <th>{{ form.material_type }}</th>
       </tr>
     </table>
 
