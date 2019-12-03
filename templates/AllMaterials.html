@@ -4,7 +4,6 @@
 
     {% block body %}
 
-<p><a href="{{ url_for('index')}}"> Home </a></p>
 
 <h3> Search for Materials by Title: </h3>
 <form method="POST">
@@ -12,7 +11,7 @@
     <input type="submit" formaction="/searchMaterials" value="Search">
 </form>
 
-    <p><a href="{{ url_for('add_materials')}}"> Add a new material</a></p>
+    <p><a href="{{ url_for('add_materials')}}"><button> Add a new material</button></a></p>
 
 {% with messages = get_flashed_messages() %}
  {% if messages %}
@@ -32,31 +31,22 @@
         <table>
             <thead>
                 <tr>
-                    <th>MaterialsID</th>
                     <th>Title</th>
                     <th>Creator</th>
-                    <th>YearCreated</th>
                     <th>Genre</th>
                     <th>MaterialType</th>
                     <th>Available</th>
-                    <th>DateAcquired</th>
-                    <th>LastModified</th>
                 </tr>
             </thead>
 
             <tbody>
                 {% for row in materials %}
                 <tr>
-                    <td> {{ row.MaterialsID }} </td>
                     <td> {{ row.Title }} </td>
                     <td> {{ row.Creator }} </td>
-                    <td> {{ row.YearCreated }} </td>
                     <td> {{ row.Genre }} </td>
                     <td> {{ row.MaterialType }} </td>
                     <td> {{ row.Available }} </td>
-                    <td> {{ row.DateAcquired }} </td>
-                    <td> {{ row.LastModified }} </td>
-
                         <td>
                 <form action="{{ url_for('material', material_id=row.MaterialsID) }}" method="POST">
                     <input type="submit" value="Details" class="btn btn-info" />

@@ -2,12 +2,71 @@
 <html lang="en">
 
   <head>
+    <link rel="stylesheet" href="stylesheet.css">
     <meta charset="utf-8">
     <title>{{ pageTitle }}</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
 #flash { display:none; background-color:white; color:red}
+
+body{
+  background-image: url(static/background.jpg)
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+
+th,td{
+  padding: 10px;
+  text-align: center;
+}
+
+th,h1,h3{
+  background-color: #a70000;
+  color: white;
+}
+
+tr:nth-child(even)
+{
+  background-color: #e8e8e8;
+}
+
+tr:nth-child(odd)
+{
+  background-color: #FFFFFF;
+}
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
 </style>
 
 <script>
@@ -24,6 +83,12 @@
       <h1> West Branch Public Library Catalogue </h1>
       <hr>
 
+      <div class="topnav">
+        <a class="active" href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('AllMaterials') }}">Materials</a>
+        <a href="{{ url_for('AllPatrons') }}">Patrons</a>
+        <a href="{{ url_for('AllCirculations') }}">Circulation</a>
+      </div>
       {% block body %}
 
 	  {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<p><a href="{{ url_for('index')}}"> Home </a></p>
+
 
 <h3> Search for Patrons: </h3>
 <form method="POST">
@@ -10,7 +10,7 @@
 <input type="submit" formaction="/searchPatrons" value="Search">
 </form>
 
-<p><a href="{{ url_for('add_patrons')}}"> Add a new patron</a></p>
+<p><a href="{{ url_for('add_patrons')}}"><button> Add a new patron</button></a></p>
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}

@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
 <div>
-<p><a href="{{ url_for('AllMaterials')}}"> All Materials </a></p>
   <h3>{{ legend }}</h3>
 
   {% with messages = get_flashed_messages() %}
@@ -21,6 +20,10 @@
 {% if form %}
   <form method="POST">
     <table>
+        <tr>
+          <th>Material ID:</th>
+          <th>{{ form.MaterialsID }}
+        </tr>
         <tr>
           <th>Title: </th>
           <th>{{ form.Title }}</th>
