@@ -283,11 +283,17 @@ def check_out():
         return redirect('/AllCirculations')
     
     return render_template('Check_Out.html', form=form, pageTitle='Check-out Material', legend="Check-Out")
-"""
-@app.route('Check_In', methods =['GET', 'POST'])
-def check_in():
-    """
 
+@app.route('/Check_In', methods =['GET', 'POST'])
+def check_in():
+    form = CirculationForm()
+    if form.validate_on_submit():
+        circulation = group5_wbpl_circulation(checked_out = form.checked_out.data, title = form.title.data, material_type = form.material_type.data, checkout_date = form.checkout_date.data, due_date = form.due_date.data)
+        db.session.add(circulation)
+        db.session.commit()
+        return redirect('/AllCirculations')
+    
+    return render_template('Check_In.html', form=form, pageTitle='Check-In Material', legend="Check-In")
 
 
 if __name__ == '__main__':
