@@ -4,7 +4,6 @@
 
 
     <p><a href="{{ url_for('check_out')}}"><button> Check-Out</button></a>
-    <a href="{{ url_for('check_in')}}"><button> Check-In</button></a></p>
 <h3> Search for checked-out material by patron's First Name: </h3>
 <form method="POST">
     <input type="text" autofocus="autofocus" name="search_string">
@@ -21,13 +20,11 @@
     <table>
         <thead>
             <tr>
-                <th>Circulation ID</th>
                 <th>Patron ID</th>
                 <th>MaterialsID</th>
                 <th>Checked-Out</th>
                 <th>Title</th>
                 <th>Material Type</th>
-                <th>Checkout Date</th>
                 <th>Due Date</th>
             </tr>
         </thead>
@@ -35,14 +32,17 @@
         <tbody>
             {% for row in circulations %}
             <tr>
-                <td> {{ row.circulation_id }} </td>
                 <td> {{ row.patron_id }} </td>
                 <td> {{ row.MaterialsID }} </td>
                 <td> {{ row.checked_out }} </td>
                 <td> {{ row.title }} </td>
                 <td> {{ row.material_type }} </td>
-                <td> {{ row.checkout_date }} </td>
                 <td> {{ row.due_date }} </td>
+                <td>
+        <form action="{{ url_for('circulation', circulation_id=row.circulation_id) }}" method="POST">
+            <input type="submit" value="Details" class="btn btn-info" />
+        </form>
+    </td>
 
             </tr>
                 {% endfor %}
@@ -52,4 +52,3 @@
     {% endif %}
 
 {% endblock %}
-

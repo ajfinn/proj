@@ -49,8 +49,8 @@ class group5_wbpl_materials(db.Model):
     MaterialType = db.Column(db.String(25))
     Available = db.Column(db.String(10))
     DateAcquired = db.Column(db.Date)
-    LastModified = db.Column(db.Date) 
-    
+    LastModified = db.Column(db.Date)
+
     def __repr__(self):
         return "id: {0} | Title: {1} | Creator: {2} | Year Created: {3} | Genre: {4} | Type: {5} | Available: {6} | Date Acquired: {7} | Last Modified: {8}".format(self.MaterialsID, self.Title, self.Creator, self.YearCreated, self.Genre, self.MaterialType, self.Available, self.DateAcquired, self.LastModified)
 
@@ -293,25 +293,31 @@ def check_out():
         now = datetime.datetime.now()
         twoweeks = datetime.timedelta(weeks = 2)
         due = now + twoweeks
+        material.Available = 0
         circulation = group5_wbpl_circulation(patron_id = patron.patron_id, MaterialsID = material.MaterialsID, checked_out = isCheckedOut, title = material.Title, material_type = material.MaterialType, checkout_date = now, due_date = due)
         db.session.add(circulation)
         db.session.commit()
         return redirect('/AllCirculations')
 
     return render_template('Check_Out.html', form=form, pageTitle='Check-out Material', legend="Check-Out")
-    
 
-@app.route('/Check_In', methods =['GET', 'POST'])
-def check_in():
-    form = CirculationForm()
-    if form.validate_on_submit():
-        circulation = group5_wbpl_circulation(checked_out = form.checked_out.data, title = form.title.data, material_type = form.material_type.data, checkout_date = today, due_date = form.due_date.data)
-        db.session.add(circulation)
+@app.route('/circulation/<int:circulation_id>', methods=['GET','POST'])
+def circulation(circulation_id):
+    circulation = group5_wbpl_circulation.query.get_or_404(circulation_id)
+    return render_template('circulation.html', form=circulation, pageTitle='Circulation Details')
+
+
+@app.route('/circulation/<int:circulation_id>/check_in', methods =['POST'])
+def check_in(circulation_id):
+    if request.method=='POST':
+        circulation = group5_wbpl_circulation.query.get_or_404(circulation_id)
+        material = group5_wbpl_materials.query.get_or_404(circulation.MaterialsID)
+        material.Available = 1
+        db.session.delete(circulation)
         db.session.commit()
         return redirect('/AllCirculations')
-
-    return render_template('Check_In.html', form=form, pageTitle='Check-In Material', legend="Check-In")
-
+    else:
+        return redirect('/AllCirculations')
 
 if __name__ == '__main__':
     app.run(debug=True)
