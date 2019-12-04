@@ -1,5 +1,17 @@
 {% extends 'base.html' %}
 {% block body %}
+<header>
+    <h1> West Branch Public Library Catalogue </h1>
+
+    <nav>
+      <div class="topnav">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('AllMaterials') }}">Materials</a>
+        <a href="{{ url_for('AllPatrons') }}">Patrons</a>
+        <a class="active" href="{{ url_for('AllCirculations') }}">Circulation</a>
+      </div>
+    </nav>
+</header>
 <div>
   <h3>{{ legend }}</h3>
 

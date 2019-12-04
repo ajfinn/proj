@@ -79,15 +79,7 @@ tr:nth-child(odd)
 </head>
 
   <body>
-      <h1> West Branch Public Library Catalogue </h1>
-      <hr>
 
-      <div class="topnav">
-        <a class="active" href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('AllMaterials') }}">Materials</a>
-        <a href="{{ url_for('AllPatrons') }}">Patrons</a>
-        <a href="{{ url_for('AllCirculations') }}">Circulation</a>
-      </div>
       {% block body %}
 
 	  {% endblock %}
