@@ -2,7 +2,7 @@
 {% block body %}
 
 <div>
-<p><a href="{{ url_for('AllCirculations')}}"><button> Back </button></a></p>
+
   <h3>{{ legend }}</h3>
 
   {% with messages = get_flashed_messages() %}
@@ -33,6 +33,7 @@
         <th>{{ form.MaterialsID.label }}</th>
         <th>{{ form.MaterialsID }}</th>
       </tr>
+    </table>
 
     <input type="submit" value="Check-Out">
 
