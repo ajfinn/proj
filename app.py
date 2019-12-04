@@ -123,6 +123,9 @@ class CheckOutForm(FlaskForm):
     patron_id = IntegerField('Patron ID:', validators = [DataRequired()])
     MaterialsID = IntegerField('Material ID:', validators = [DataRequired()])
 
+class CheckInForm(FlaskForm):
+    circulation_id = IntegerField('Circulation ID:', validators = [DataRequired()])
+    MaterialsID = IntegerField('Material ID:', validators = [DataRequired()])
 
 @app.route('/')
 def index():
@@ -318,6 +321,18 @@ def check_in(circulation_id):
         return redirect('/AllCirculations')
     else:
         return redirect('/AllCirculations')
+
+@app.route('/Check_In', methods =['GET', 'POST'])
+def returnM():
+    form = CheckInForm()
+    if form.validate_on_submit():
+        circulation = group5_wbpl_circulation.query.get_or_404(form.circulation_id.data)
+        material = group5_wbpl_materials.query.get_or_404(circulation.MaterialsID)
+        material.Available = 1
+        db.session.delete(circulation)
+        db.session.commit()
+        return redirect('/AllCirculations')
+    return render_template('Check_in.html', form=form, pageTitle='Check-in Material', legend="Check-In")
 
 if __name__ == '__main__':
     app.run(debug=True)
