@@ -4,11 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, SelectField, IntegerField, BooleanField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
-<<<<<<< HEAD
-from datetime import date, timedelta
-=======
 import datetime
->>>>>>> 6aab3f21a4cf60549ef2deb5d53385a147226e15
 import pymysql
 import secrets
 #import os
@@ -123,18 +119,9 @@ class PatronForm(FlaskForm):
     Birthdate = StringField('Birthdate:', validators = [DataRequired()])
     created_at = StringField('Created on:', validators = [DataRequired()])
 
-<<<<<<< HEAD
-class CirculationForm(FlaskForm):
-    circulation_id = IntegerField('Circulation ID: ')
-    patron_id = IntegerField('Patron ID:', validators = [DataRequired()])
-    MaterialsID = IntegerField('Material ID:', validators = [DataRequired()])
-    checkout_date = DateField('Checkout Date:')
-    due_date = DateField('Due Date:')
-=======
 class CheckOutForm(FlaskForm):
     patron_id = IntegerField('Patron ID:', validators = [DataRequired()])
     MaterialsID = IntegerField('Material ID:', validators = [DataRequired()])
->>>>>>> 6aab3f21a4cf60549ef2deb5d53385a147226e15
 
 
 @app.route('/')
@@ -298,12 +285,6 @@ def AllCirculations():
 
 @app.route('/Check_Out', methods =['GET', 'POST'])
 def check_out():
-<<<<<<< HEAD
-    form = CirculationForm()
-    material = group5_wbpl_materials.query.get_or_404(material_id)
-    if form.validate_on_submit():
-        circulation = group5_wbpl_circulation(circulation_id=form.circulation_id.data, MaterialsID=form.MaterialsID.data, patron_id=form.patron_id.data, checkout_date=date.today(), due_date=(date.today() + timedelta(7) ))
-=======
     form = CheckOutForm()
     if form.validate_on_submit():
         material = group5_wbpl_materials.query.get_or_404(form.MaterialsID.data)
@@ -313,7 +294,6 @@ def check_out():
         twoweeks = datetime.timedelta(weeks = 2)
         due = now + twoweeks
         circulation = group5_wbpl_circulation(patron_id = patron.patron_id, MaterialsID = material.MaterialsID, checked_out = isCheckedOut, title = material.Title, material_type = material.MaterialType, checkout_date = now, due_date = due)
->>>>>>> 6aab3f21a4cf60549ef2deb5d53385a147226e15
         db.session.add(circulation)
         db.session.commit()
         return redirect('/AllCirculations')
