@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, SelectField, IntegerField, BooleanField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
+from datetime import date, timedelta
 import pymysql
 import secrets
 #import os
@@ -119,13 +120,11 @@ class PatronForm(FlaskForm):
     created_at = StringField('Created on:', validators = [DataRequired()])
 
 class CirculationForm(FlaskForm):
+    circulation_id = IntegerField('Circulation ID: ')
     patron_id = IntegerField('Patron ID:', validators = [DataRequired()])
     MaterialsID = IntegerField('Material ID:', validators = [DataRequired()])
-    checked_out = StringField('Checked Out:', validators = [DataRequired()])
-    title = StringField('Title:', validators = [DataRequired()])
-    material_type = StringField('Material Type:', validators = [DataRequired()])
-    checkout_date = DateField('Checkout Date:', validators = [DataRequired()])
-    due_date = DateField('Due Date:', validators = [DataRequired()])
+    checkout_date = DateField('Checkout Date:')
+    due_date = DateField('Due Date:')
 
 
 @app.route('/')
@@ -290,8 +289,9 @@ def AllCirculations():
 @app.route('/Check_Out', methods =['GET', 'POST'])
 def check_out():
     form = CirculationForm()
+    material = group5_wbpl_materials.query.get_or_404(material_id)
     if form.validate_on_submit():
-        circulation = group5_wbpl_circulation(checked_out = form.checked_out.data, title = form.title.data, material_type = form.material_type.data, checkout_date = form.checkout_date.data, due_date = form.due_date.data)
+        circulation = group5_wbpl_circulation(circulation_id=form.circulation_id.data, MaterialsID=form.MaterialsID.data, patron_id=form.patron_id.data, checkout_date=date.today(), due_date=(date.today() + timedelta(7) ))
         db.session.add(circulation)
         db.session.commit()
         return redirect('/AllCirculations')
